@@ -45,6 +45,7 @@ class PieChart extends StatefulWidget {
       this.chartValuesColor = Colors.black87,
       this.colorList = defaultColorList,
       this.showLegends = true,
+      this.initialAngle = 0.0,
       this.fontFamily,
       Key key})
       : super(key: key);
@@ -114,6 +115,7 @@ class _PieChartState extends State<PieChart> with SingleTickerProviderStateMixin
                     widget.showChartValuesOutside,
                     widget.colorList,
                     values: legendValues,
+                    initialAngle: widget.initialAngle,
                     showValuesInPercentage: widget.showChartValuesInPercentage,
                     chartValuesColor: widget.chartValuesColor,
                   ),
@@ -191,6 +193,7 @@ class PieChartPainter extends CustomPainter {
   List<double> subParts;
   double total = 0;
   double totalAngle = math.pi * 2;
+  final double initialAngle;
   final bool showValuesInPercentage;
   final bool showChartValuesOutside;
   final Color chartValuesColor;
@@ -200,6 +203,7 @@ class PieChartPainter extends CustomPainter {
     this.showChartValuesOutside,
     List<Color> colorList, {
     List<double> values,
+    this.initialAngle,
     this.showValuesInPercentage,
     this.chartValuesColor,
   }) {
@@ -225,8 +229,8 @@ class PieChartPainter extends CustomPainter {
     for (int i = 0; i < subParts.length; i++) {
       canvas.drawArc(new Rect.fromLTWH(0.0, 0.0, size.width, size.height), prevAngle, (((totalAngle) / total) * subParts[i]), true, paintList[i]);
       var factor = showChartValuesOutside ? 1.65 : 3;
-      var x = (size.width / factor) * math.cos(prevAngle + ((((totalAngle) / total) * subParts[i]) / 2));
-      var y = (size.width / factor) * math.sin(prevAngle + ((((totalAngle) / total) * subParts[i]) / 2));
+      var x = (size.width / factor) * math.cos(initialAngle + prevAngle + ((((totalAngle) / total) * subParts[i]) / 2));
+      var y = (size.width / factor) * math.sin(initialAngle + prevAngle + ((((totalAngle) / total) * subParts[i]) / 2));
       if (subParts.elementAt(i).toInt() != 0) {
         var name = showValuesInPercentage ? (((subParts.elementAt(i) / total) * 100).toStringAsFixed(0) + '%') : subParts.elementAt(i).toInt().toString();
         drawName(canvas, name, x - 4, y, size);
