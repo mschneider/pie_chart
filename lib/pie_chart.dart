@@ -19,7 +19,7 @@ class PieChart extends StatefulWidget {
   final Color chartValuesColor;
   final List<Color> colorList;
   final bool showLegends;
-  final float initialAngle;
+  final double initialAngle;
   final String fontFamily;
   static const List<Color> defaultColorList = [
     Color(0xFFff7675),
