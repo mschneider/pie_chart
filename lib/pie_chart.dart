@@ -228,7 +228,7 @@ class PieChartPainter extends CustomPainter {
     prevAngle = 0;
     finalAngle = 0;
     for (int i = 0; i < subParts.length; i++) {
-      canvas.drawArc(new Rect.fromLTWH(0.0, 0.0, size.width, size.height), prevAngle, (((totalAngle) / total) * subParts[i]), true, paintList[i]);
+      canvas.drawArc(new Rect.fromLTWH(0.0, 0.0, size.width, size.height), initialAngle+prevAngle, initialAngle+(((totalAngle) / total) * subParts[i]), true, paintList[i]);
       var factor = showChartValuesOutside ? 1.65 : 3;
       var x = (size.width / factor) * math.cos(initialAngle + prevAngle + ((((totalAngle) / total) * subParts[i]) / 2));
       var y = (size.width / factor) * math.sin(initialAngle + prevAngle + ((((totalAngle) / total) * subParts[i]) / 2));
